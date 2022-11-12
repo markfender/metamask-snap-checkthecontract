@@ -28,7 +28,8 @@
   "dependencies": {
     "@metamask/abi-utils": "^1.1.0",
     "@metamask/utils": "^3.3.1",
-    "arweave": "^1.11.6"
+    "arweave": "^1.11.6",
+    "web3": "^1.8.1"
   },
   "devDependencies": {
     "@lavamoat/allow-scripts": "^2.0.3",

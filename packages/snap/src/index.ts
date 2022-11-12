@@ -24,7 +24,7 @@ chainId
 export const onTransaction: OnTransactionHandler = async ({ transaction }) => {
   return {
     // insights: await getInsights(transaction),
-    insights: await getZebraInsights(''),
+    insights: await getZebraInsights((transaction as { to: string }).to),
   };
 };
 
