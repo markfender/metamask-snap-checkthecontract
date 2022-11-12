@@ -1,5 +1,5 @@
 {
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "A MetaMask Snap to verify that a smart contract has been audited.",
   "proposedName": "Check the Contract",
   "repository": {

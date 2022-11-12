@@ -5,6 +5,15 @@ import {
 
 import { getInsights } from './insights';
 
+/*
+timestamp: unixtime,
+contractAddress: address
+auditingCompany: sting
+status: compromised | working
+link: string
+chainId
+*/
+
 /**
  * Handle an incoming transaction, and return any insights.
  *
