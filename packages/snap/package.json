@@ -1,11 +1,11 @@
 {
-  "name": "snap",
-  "version": "0.1.0",
-  "private": true,
-  "description": "The 'Hello, world!' of MetaMask Snaps, now written in TypeScript.",
+  "name": "metamask-snap-checkthecontract",
+  "version": "0.1.1",
+  "private": false,
+  "description": "A MetaMask Snap to verify that a smart contract has been audited.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/MetaMask/template-snap-monorepo.git"
+    "url": "https://github.com/markfender/metamask-snap-checkthecontract.git"
   },
   "license": "(MIT-0 OR Apache-2.0)",
   "main": "src/index.ts",
@@ -25,6 +25,11 @@
     "lint:misc": "prettier '**/*.json' '**/*.md' '!CHANGELOG.md' --ignore-path .gitignore",
     "serve": "mm-snap serve",
     "start": "mm-snap watch"
+  },
+  "dependencies": {
+    "@metamask/abi-utils": "^1.1.0",
+    "@metamask/utils": "^3.3.1",
+    "arweave": "^1.11.6"
   },
   "devDependencies": {
     "@lavamoat/allow-scripts": "^2.0.3",
@@ -56,10 +61,5 @@
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org/"
-  },
-  "dependencies": {
-    "@metamask/abi-utils": "^1.1.0",
-    "@metamask/utils": "^3.3.1",
-    "arweave": "^1.11.6"
   }
 }

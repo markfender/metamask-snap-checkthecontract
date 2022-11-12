@@ -1,18 +1,18 @@
 {
   "version": "0.1.0",
-  "description": "An example Snap written in TypeScript.",
-  "proposedName": "TypeScript Example Snap",
+  "description": "A MetaMask Snap to verify that a smart contract has been audited.",
+  "proposedName": "Check the Contract",
   "repository": {
     "type": "git",
-    "url": "https://github.com/MetaMask/template-snap-monorepo.git"
+    "url": "https://github.com/markfender/metamask-snap-checkthecontract.git"
   },
   "source": {
-    "shasum": "jZF03dmVeo8xRbSavwI09Pee8u93EWXrZX4HwHlUjDw=",
+    "shasum": "lbDh9Vo3dHNfrwsCr27dm+YDwTmd5pGac2knIeYTwt8=",
     "location": {
       "npm": {
         "filePath": "dist/bundle.js",
         "iconPath": "images/icon.svg",
-        "packageName": "snap",
+        "packageName": "metamask-snap-checkthecontract",
         "registry": "https://registry.npmjs.org/"
       }
     }
