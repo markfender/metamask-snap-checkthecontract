@@ -1,7 +1,6 @@
 {
   "name": "metamask-snap-checkthecontract",
   "version": "0.1.1",
-  "private": false,
   "description": "A MetaMask Snap to verify that a smart contract has been audited.",
   "repository": {
     "type": "git",
