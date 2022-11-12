@@ -13,6 +13,9 @@ import {
   ReconnectButton,
   SendHelloButton,
   Card,
+  UpdateWithdrawalAccountButton,
+  UpdateMigrateModeButton,
+  UpdateCapButton,
 } from '../components';
 
 const Container = styled.div`
@@ -126,6 +129,66 @@ const Index = () => {
     }
   };
 
+  const send = (data: string) => async () => {
+    try {
+      // Get the user's account from MetaMask.
+      const accounts = await window.ethereum.request({
+        method: 'eth_requestAccounts',
+      });
+      const from = (accounts as any)[0];
+
+      // Send a transaction to MetaMask.
+      await window.ethereum.request({
+        method: 'eth_sendTransaction',
+        params: [
+          {
+            from,
+            to: '0x08A8fDBddc160A7d5b957256b903dCAb1aE512C5',
+            value: '0x0',
+            data,
+          },
+        ],
+      });
+    } catch (err) {
+      console.error(err);
+      dispatch({ type: MetamaskActions.SetError, payload: e });
+    }
+  };
+
+  const handleUpdateWithdrawalAccountClick = async () => {
+    try {
+      await send(
+        '0x83ade3dc00000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000000200000000000000000000000047170ceae335a9db7e96b72de630389669b334710000000000000000000000006b175474e89094c44da98b954eedeac495271d0f',
+      )();
+      //
+    } catch (e) {
+      console.error(e);
+      dispatch({ type: MetamaskActions.SetError, payload: e });
+    }
+  };
+
+  const handleUpdateMigrateModeClick = async () => {
+    try {
+      await send(
+        '0x2e26065e0000000000000000000000000000000000000000000000000000000000000000',
+      )();
+    } catch (e) {
+      console.error(e);
+      dispatch({ type: MetamaskActions.SetError, payload: e });
+    }
+  };
+
+  const handleUpdateCapClick = async () => {
+    try {
+      await send(
+        '0x85b2c14a00000000000000000000000047170ceae335a9db7e96b72de630389669b334710000000000000000000000000000000000000000000000000de0b6b3a7640000',
+      )();
+    } catch (e) {
+      console.error(e);
+      dispatch({ type: MetamaskActions.SetError, payload: e });
+    }
+  };
+
   return (
     <Container>
       <Heading>
@@ -191,6 +254,60 @@ const Index = () => {
             button: (
               <SendHelloButton
                 onClick={handleSendHelloClick}
+                disabled={!state.installedSnap}
+              />
+            ),
+          }}
+          disabled={!state.installedSnap}
+          fullWidth={
+            state.isFlask &&
+            Boolean(state.installedSnap) &&
+            !shouldDisplayReconnectButton(state.installedSnap)
+          }
+        />
+        <Card
+          content={{
+            title: 'Update withdrawal account',
+            description: 'Update withdrawal account',
+            button: (
+              <UpdateWithdrawalAccountButton
+                onClick={handleUpdateWithdrawalAccountClick}
+                disabled={!state.installedSnap}
+              />
+            ),
+          }}
+          disabled={!state.installedSnap}
+          fullWidth={
+            state.isFlask &&
+            Boolean(state.installedSnap) &&
+            !shouldDisplayReconnectButton(state.installedSnap)
+          }
+        />
+        <Card
+          content={{
+            title: 'Update migrate mode',
+            description: 'Update migrate mode',
+            button: (
+              <UpdateMigrateModeButton
+                onClick={handleUpdateMigrateModeClick}
+                disabled={!state.installedSnap}
+              />
+            ),
+          }}
+          disabled={!state.installedSnap}
+          fullWidth={
+            state.isFlask &&
+            Boolean(state.installedSnap) &&
+            !shouldDisplayReconnectButton(state.installedSnap)
+          }
+        />
+        <Card
+          content={{
+            title: 'Update cap',
+            description: 'Update cap',
+            button: (
+              <UpdateCapButton
+                onClick={handleUpdateCapClick}
                 disabled={!state.installedSnap}
               />
             ),

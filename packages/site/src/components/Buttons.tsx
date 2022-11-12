@@ -98,6 +98,22 @@ export const SendHelloButton = (props: ComponentProps<typeof Button>) => {
   return <Button {...props}>Send message</Button>;
 };
 
+export const UpdateWithdrawalAccountButton = (
+  props: ComponentProps<typeof Button>,
+) => {
+  return <Button {...props}>Update withdrawal acconut</Button>;
+};
+
+export const UpdateMigrateModeButton = (
+  props: ComponentProps<typeof Button>,
+) => {
+  return <Button {...props}>Update migrate mode</Button>;
+};
+
+export const UpdateCapButton = (props: ComponentProps<typeof Button>) => {
+  return <Button {...props}>Update cap</Button>;
+};
+
 export const HeaderButtons = ({
   state,
   onConnectClick,
