@@ -101,7 +101,7 @@ export const SendHelloButton = (props: ComponentProps<typeof Button>) => {
 export const UpdateWithdrawalAccountButton = (
   props: ComponentProps<typeof Button>,
 ) => {
-  return <Button {...props}>Update withdrawal acconut</Button>;
+  return <Button {...props}>Update withdrawal account</Button>;
 };
 
 export const UpdateMigrateModeButton = (

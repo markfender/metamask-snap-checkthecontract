@@ -10,5 +10,6 @@
     "strict": true,
     "target": "ES2017"
   },
-  "exclude": ["**/__snapshots__/**", "**/test/**", "**/*.test.ts"]
+  "exclude": ["**/__snapshots__/**", "**/test/**", "**/*.test.ts"],
+  "files": ["./node_modules/@metamask/snap-types/global.d.ts"]
 }
