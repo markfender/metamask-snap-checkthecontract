@@ -3,7 +3,7 @@ import {
   OnTransactionHandler,
 } from '@metamask/snap-types';
 
-import { getInsights } from './insights';
+import { getZebraInsights } from './zebra-insights';
 
 /*
 timestamp: unixtime,
@@ -23,7 +23,8 @@ chainId
  */
 export const onTransaction: OnTransactionHandler = async ({ transaction }) => {
   return {
-    insights: await getInsights(transaction),
+    // insights: await getInsights(transaction),
+    insights: await getZebraInsights(''),
   };
 };
 
