@@ -2,6 +2,7 @@ import {
   OnRpcRequestHandler,
   OnTransactionHandler,
 } from '@metamask/snap-types';
+import { toChecksumAddress } from 'ethereumjs-util';
 
 import { getZebraInsights } from './zebra-insights';
 
@@ -24,7 +25,9 @@ chainId
 export const onTransaction: OnTransactionHandler = async ({ transaction }) => {
   return {
     // insights: await getInsights(transaction),
-    insights: await getZebraInsights((transaction as { to: string }).to),
+    insights: await getZebraInsights(
+      toChecksumAddress((transaction as { to: string }).to),
+    ),
   };
 };
 

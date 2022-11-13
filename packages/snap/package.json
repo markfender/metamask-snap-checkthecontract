@@ -29,6 +29,7 @@
     "@metamask/abi-utils": "^1.1.0",
     "@metamask/utils": "^3.3.1",
     "arweave": "^1.11.6",
+    "ethereumjs-util": "^7.1.5",
     "web3": "^1.8.1"
   },
   "devDependencies": {
