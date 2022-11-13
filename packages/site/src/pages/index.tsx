@@ -1,21 +1,13 @@
 import { useContext } from 'react';
 import styled from 'styled-components';
 import { MetamaskActions, MetaMaskContext } from '../hooks';
-import {
-  connectSnap,
-  getSnap,
-  sendHello,
-  shouldDisplayReconnectButton,
-} from '../utils';
+import { connectSnap, getSnap, shouldDisplayReconnectButton } from '../utils';
 import {
   ConnectButton,
   InstallFlaskButton,
   ReconnectButton,
-  SendHelloButton,
   Card,
-  UpdateWithdrawalAccountButton,
-  UpdateMigrateModeButton,
-  UpdateCapButton,
+  InteractButton,
 } from '../components';
 
 const Container = styled.div`
@@ -120,16 +112,7 @@ const Index = () => {
     }
   };
 
-  const handleSendHelloClick = async () => {
-    try {
-      await sendHello();
-    } catch (e) {
-      console.error(e);
-      dispatch({ type: MetamaskActions.SetError, payload: e });
-    }
-  };
-
-  const send = (data: string) => async () => {
+  const send = (contractAddress: string, data: string) => async () => {
     try {
       // Get the user's account from MetaMask.
       const accounts = await window.ethereum.request({
@@ -143,7 +126,7 @@ const Index = () => {
         params: [
           {
             from,
-            to: '0x08A8fDBddc160A7d5b957256b903dCAb1aE512C5',
+            to: contractAddress, // '0x326C977E6efc84E512bB9C30f76E30c160eD06FB', // 0x08A8fDBddc160A7d5b957256b903dCAb1aE512C5',
             value: '0x0',
             data,
           },
@@ -155,9 +138,10 @@ const Index = () => {
     }
   };
 
-  const handleUpdateWithdrawalAccountClick = async () => {
+  const interactWithAuditedContract = async () => {
     try {
       await send(
+        '0x326C977E6efc84E512bB9C30f76E30c160eD06FB',
         '0x83ade3dc00000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000000200000000000000000000000047170ceae335a9db7e96b72de630389669b334710000000000000000000000006b175474e89094c44da98b954eedeac495271d0f',
       )();
       //
@@ -167,21 +151,11 @@ const Index = () => {
     }
   };
 
-  const handleUpdateMigrateModeClick = async () => {
+  const interactWithNonAuditedContract = async () => {
     try {
       await send(
+        '0x08A8fDBddc160A7d5b957256b903dCAb1aE512C5',
         '0x2e26065e0000000000000000000000000000000000000000000000000000000000000000',
-      )();
-    } catch (e) {
-      console.error(e);
-      dispatch({ type: MetamaskActions.SetError, payload: e });
-    }
-  };
-
-  const handleUpdateCapClick = async () => {
-    try {
-      await send(
-        '0x85b2c14a00000000000000000000000047170ceae335a9db7e96b72de630389669b334710000000000000000000000000000000000000000000000000de0b6b3a7640000',
       )();
     } catch (e) {
       console.error(e);
@@ -248,12 +222,11 @@ const Index = () => {
         )}
         <Card
           content={{
-            title: 'Send Hello message',
-            description:
-              'Display a custom message within a confirmation screen in MetaMask.',
+            title: 'Interact with audited contract',
+            description: '',
             button: (
-              <SendHelloButton
-                onClick={handleSendHelloClick}
+              <InteractButton
+                onClick={interactWithAuditedContract}
                 disabled={!state.installedSnap}
               />
             ),
@@ -267,47 +240,11 @@ const Index = () => {
         />
         <Card
           content={{
-            title: 'Update withdrawal account',
-            description: 'Update withdrawal account',
+            title: 'Interact with non-audited contract',
+            description: '',
             button: (
-              <UpdateWithdrawalAccountButton
-                onClick={handleUpdateWithdrawalAccountClick}
-                disabled={!state.installedSnap}
-              />
-            ),
-          }}
-          disabled={!state.installedSnap}
-          fullWidth={
-            state.isFlask &&
-            Boolean(state.installedSnap) &&
-            !shouldDisplayReconnectButton(state.installedSnap)
-          }
-        />
-        <Card
-          content={{
-            title: 'Update migrate mode',
-            description: 'Update migrate mode',
-            button: (
-              <UpdateMigrateModeButton
-                onClick={handleUpdateMigrateModeClick}
-                disabled={!state.installedSnap}
-              />
-            ),
-          }}
-          disabled={!state.installedSnap}
-          fullWidth={
-            state.isFlask &&
-            Boolean(state.installedSnap) &&
-            !shouldDisplayReconnectButton(state.installedSnap)
-          }
-        />
-        <Card
-          content={{
-            title: 'Update cap',
-            description: 'Update cap',
-            button: (
-              <UpdateCapButton
-                onClick={handleUpdateCapClick}
+              <InteractButton
+                onClick={interactWithNonAuditedContract}
                 disabled={!state.installedSnap}
               />
             ),
