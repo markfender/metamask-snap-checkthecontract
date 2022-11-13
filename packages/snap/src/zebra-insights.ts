@@ -1,5 +1,3 @@
-import Web3 from 'web3';
-
 const whitelist: readonly string[] = [
   '0x326C977E6efc84E512bB9C30f76E30c160eD06FB',
 ];
@@ -21,39 +19,38 @@ export async function getZebraInsights(address: string) {
   const result = await response.json();
   const id = result.data.transactions.edges[0]?.node.id;
 
-  if (!id) {
-    return {};
+  let auditResult;
+  if (id) {
+    const auditResponse = await fetch(
+      `https://zkwhtbvrkecbifq6gau76g6tfhkaa656xi3lejgzklsxh7mfi7tq.arweave.net/${id}`,
+    );
+    auditResult = await auditResponse.json();
   }
-
-  const auditResponse = await fetch(
-    `https://zkwhtbvrkecbifq6gau76g6tfhkaa656xi3lejgzklsxh7mfi7tq.arweave.net/${id}`,
-  );
-  const auditResult = await auditResponse.json();
-  return auditResult;
+  return {
+    'Security audits': id
+      ? `✅ Audited by ${auditResult.auditingCompany}`
+      : '⛔️ No',
+    Upgradable: await checkIfUpgradable(whitelistedAddress),
+  };
 }
 
 // eslint-disable-next-line jsdoc/require-jsdoc
 export async function checkIfUpgradable(contractAddress: string) {
-  const web3Init = new Web3(
-    new Web3.providers.HttpProvider(
-      'https://eth-mainnet.g.alchemy.com/v2/e_wJdrZ4qnlaDJ96hvsqPuySrP3qXdt6', // "https://eth-goerli.g.alchemy.com/v2/JwhZlH7Fw8FkoNVPsGmt_g9J3FnIeTT8"
-    ),
-  );
+  const code =
+    (await wallet?.request({
+      method: 'eth_getCode',
+      params: [contractAddress],
+    })) || '';
 
-  const code = await web3Init.eth.getCode(contractAddress);
-
-  const listOfUpgradableFunctions = ['implementation()', 'upgradeTo(address)'];
+  const listOfUpgradableFunctions = ['5c60da1b', '3659cfe6']; // ['implementation()', 'upgradeTo(address)'];
   const isUpgradable = listOfUpgradableFunctions
     .map(
       (functionSignature: string): boolean =>
-        code.indexOf(
-          web3Init.eth.abi
-            .encodeFunctionSignature(functionSignature)
-            .slice(2, 10),
-        ) > 0,
+        code.toString().indexOf(functionSignature) > 0,
     )
     .includes(true);
 
-  console.log('isSigPresent', isUpgradable);
-  return isUpgradable;
+  return isUpgradable
+    ? '❗️ Yes'
+    : '✅ No (upgrdability patter was not detected)';
 }
